@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+#include <time.h>
+
+#define W 60
+#define H 25
+char screen[H][W];
+
+void init()
+{
+    for (int i = 0; i < H; i++)
+        for (int j = 0; j < W; j++)
+            screen[i][j] = ' ';
+}
+
+void snowFall()
+{
+    int pos = rand() % W;
+    screen[0][pos] = '*';
+
+    for (int i = H - 1; i > 0; i--)
+    {
+        for (int j = 0; j < W; j++)
+        {
+            if (screen[i - 1][j] == '*')
+            {
+                screen[i][j] = '*';
+                screen[i - 1][j] = ' ';
+            }
+        }
+    }
+}
+
+void show()
+{
+    system("cls");
+    for (int i = 0; i < H; i++)
+    {
+        for (int j = 0; j < W; j++)
+            putchar(screen[i][j]);
+        putchar('\n');
+    }
+}
+
+int main()
+{
+    srand((unsigned)time(NULL));
+    init();
+    while (1)
+    {
+        snowFall();
+        show();
+        Sleep(80);
+    }
+    return 0;
+}
